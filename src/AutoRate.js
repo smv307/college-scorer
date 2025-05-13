@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 
 
-const apiKey = "u0MSwGAJeHpEmDJZrsVbtgAVvMy1GVcFkExDlJy2";
+const apiKey = process.env.REACT_APP_API_KEY;
 
 // =========================
 // SEARCH COMPONENT
@@ -80,15 +80,16 @@ function AutoRate() {
 
   const handleSearch = async (schoolName) => {
     try {
-      // correct school name and get id
-      const searchUrl = `https://api.data.gov/ed/collegescorecard/v1/schools?api_key=${apiKey}&school.name=${encodeURIComponent(schoolName)}&fields=school.name,id&per_page=1`;
+      // Fetch school ID
+      const searchUrl = `https://api.data.gov/ed/collegescorecard/v1/schools?api_key=${apiKey}&school.name=${encodeURIComponent(
+        schoolName
+      )}&fields=id&per_page=1`;
       const searchRes = await fetch(searchUrl);
       const searchData = await searchRes.json();
       console.log(searchData);
 
-      // error
-      if (!searchData.results) {
-        console.warn("No results found");
+      if (!searchData.results || searchData.results.length === 0) {
+        console.warn("No results found from school search");
         setSchoolData(null);
         setScore(null);
         return;
@@ -98,16 +99,16 @@ function AutoRate() {
       const schoolId = school.id;
       console.log(schoolId);
 
-      // from 
-      const detailUrl = `https://api.data.gov/ed/collegescorecard/v1/schools/${schoolId}?api_key=${apiKey}&fields=school.name,completion_rate_4yr_150nt,demographics.student_faculty_ratio,attendance.academic_year,1_yr_after_completion.not_working_not_enrolled.overall_count,program_reporter.programs_offered`;
+      // Fetch school details
+      const detailUrl = `https://api.data.gov/ed/collegescorecard/v1/schools?id=${schoolId}?api_key=${apiKey}&fields=school.name,completion_rate_4yr_150nt,demographics.student_faculty_ratio,attendance.academic_year,1_yr_after_completion.not_working_not_enrolled.overall_count,program_reporter.programs_offered`;
       const detailRes = await fetch(detailUrl);
       const detailData = await detailRes.json();
+      console.log(detailData)
 
-      if (detailData && detailData.results && detailData.results.length > 0) {
-        const finalData = detailData.results[0];
-        setSchoolData(finalData);
+      if (detailData) {
+        setSchoolData(detailData);
       } else {
-        console.warn("No data found");
+        console.warn("No detail data found");
         setSchoolData(null);
         setScore(null);
       }
@@ -117,6 +118,7 @@ function AutoRate() {
       setScore(null);
     }
   };
+
 
   // =========================
   // COMPILE SCORE
