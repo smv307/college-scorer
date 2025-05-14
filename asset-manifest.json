@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/college-scorer/static/css/main.6a362142.css",
+    "main.js": "/college-scorer/static/js/main.63730267.js",
+    "static/js/453.1cf526a8.chunk.js": "/college-scorer/static/js/453.1cf526a8.chunk.js",
+    "index.html": "/college-scorer/index.html",
+    "main.6a362142.css.map": "/college-scorer/static/css/main.6a362142.css.map",
+    "main.63730267.js.map": "/college-scorer/static/js/main.63730267.js.map",
+    "453.1cf526a8.chunk.js.map": "/college-scorer/static/js/453.1cf526a8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a362142.css",
+    "static/js/main.63730267.js"
+  ]
+}
