@@ -7,14 +7,14 @@ import React, { useState } from 'react';
 
 // normalized to 0-100
 const gradRateScore = (gradRate) => {
-  if (gradRate < 50) return 0;
-  if (gradRate <= 90) return 0.01 * (10000 ** ((gradRate / 40) - (5 / 4)));
+  if (gradRate <= 70) return 0;
+  if (gradRate <= 90) return Math.sin((Math.PI / 40) * (gradRate - 70));
   return 100;
 };
 
 const studentFacultyRatioScore = (ratio) => {
-  if (ratio > 0 && ratio <= 10) return 100;
-  if (ratio <= 20) return 100 * (1 / 2) ** ((ratio / 8) - (5 / 4));
+  if (ratio <= 10) return 100;
+  if (ratio <= 50) return ((-5/2) * ratio) + 125;
   return 0;
 };
 
@@ -33,9 +33,9 @@ const postGradEmploymentRateScore = (rate) => {
 };
 
 const numMajorsScore = (num) => {
-  if (num < 50) return 2 * num;
+  if (num <= 50) return 2 * num;
   if (num <= 60) return 100;
-  if (num <= 100) return -100 * (5000) ** ((num / 40) - (3 / 2)); // FIX THIS 
+  if (num <= 100) return -0.01 * (5000) ** ((num / 40) - (3 / 2)) + 100; // FIX THIS 
   return 50;
 };
 
@@ -73,11 +73,11 @@ function ManualRate() {
     const employment = postGradEmploymentRateScore(parseFloat(formData.employmentRate));
     const majors = numMajorsScore(parseInt(formData.numMajors));
 
-    // weight sco
+    // weight score
     const finalScore = (
       0.2 * grad +
-      0.1 * faculty +
-      0.4 * net +
+      0.2 * faculty +
+      0.3 * net +
       0.2 * employment +
       0.1 * majors
     );
@@ -97,7 +97,7 @@ function ManualRate() {
         <input type="number" name="gradRate" placeholder="Graduation Rate (%)" value={formData.gradRate} onChange={handleChange} required />
         <input type="number" name="studentFacultyRatio" placeholder="Student-to-Faculty Ratio" value={formData.studentFacultyRatio} onChange={handleChange} required />
         <input type="number" name="netCost" placeholder="Net Cost ($)" value={formData.netCost} onChange={handleChange} required />
-        <input type="number" name="employmentRate" placeholder="Employment Rate (%)" value={formData.employmentRate} onChange={handleChange} required />
+        <input type="number" name="employmentRate" placeholder="Employment Rate 1 Year Post-Grad (%)" value={formData.employmentRate} onChange={handleChange} required />
         <input type="number" name="numMajors" placeholder="Number of Majors" value={formData.numMajors} onChange={handleChange} required />
         <button type="submit">Calculate Score</button>
       </form>

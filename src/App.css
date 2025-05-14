@@ -9,7 +9,7 @@ body {
 
 .App {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 80px auto;
   padding: 20px;
 }
 
@@ -59,7 +59,7 @@ button:hover {
 }
 
 /* manual result */
-#manual-result {
+article {
   margin-top: 20px;
   padding: 20px;
   background-color: #e9f7ef;
@@ -67,11 +67,11 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#manual-result h2 {
+article h2 {
   color: #2c3e50;
   margin-bottom: 10px;
 }
 
-#manual-result h3 {
+article h3 {
   color: #177a40;
 }
