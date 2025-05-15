@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/college-scorer/static/css/main.d56d945c.css",
-    "main.js": "/college-scorer/static/js/main.119d60a8.js",
+    "main.js": "/college-scorer/static/js/main.cae282be.js",
     "static/js/453.1cf526a8.chunk.js": "/college-scorer/static/js/453.1cf526a8.chunk.js",
     "index.html": "/college-scorer/index.html",
     "main.d56d945c.css.map": "/college-scorer/static/css/main.d56d945c.css.map",
-    "main.119d60a8.js.map": "/college-scorer/static/js/main.119d60a8.js.map",
+    "main.cae282be.js.map": "/college-scorer/static/js/main.cae282be.js.map",
     "453.1cf526a8.chunk.js.map": "/college-scorer/static/js/453.1cf526a8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d56d945c.css",
-    "static/js/main.119d60a8.js"
+    "static/js/main.cae282be.js"
   ]
 }
