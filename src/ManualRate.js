@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 // normalized to 0-100
 const gradRateScore = (gradRate) => {
   if (gradRate <= 70) return 0;
-  if (gradRate <= 90) return Math.sin((Math.PI / 40) * (gradRate - 70));
+  if (gradRate <= 90) return 100 * Math.sin((Math.PI / 40) * (gradRate - 70));
   return 100;
 };
 
@@ -68,10 +68,15 @@ function ManualRate() {
     e.preventDefault();
 
     const grad = gradRateScore(parseFloat(formData.gradRate));
+    console.log(`grad: ${grad}`);
     const faculty = studentFacultyRatioScore(parseFloat(formData.studentFacultyRatio));
+    console.log(`fac: ${faculty}}`);
     const net = netPriceScore(parseFloat(formData.netCost));
+    console.log(`net: ${net}`);
     const employment = postGradEmploymentRateScore(parseFloat(formData.employmentRate));
+    console.log(`emp: ${employment}`);
     const majors = numMajorsScore(parseInt(formData.numMajors));
+    console.log(`majors: ${majors}`);
 
     // weight score
     const finalScore = (
