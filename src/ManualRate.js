@@ -21,14 +21,13 @@ const studentFacultyRatioScore = (ratio) => {
 const netPriceScore = (netPrice) => {
   const adjustedPrice = netPrice / 1000; // price in thousands
   if (adjustedPrice <= 10) return 100;
-  if (adjustedPrice <= 50) return 100 * (1 / 2) ** ((adjustedPrice / 40) - (1 / 4));
-  if (adjustedPrice <= 80) return 100 * (1 / 50) ** ((adjustedPrice / 30) - (5 / 3));
+  if (adjustedPrice < 80) return ((1 / 3250) * (adjustedPrice ** 3)) - ((127 / 2520) * (adjustedPrice ** 2)) + ((199 / 252) * (adjustedPrice)) + 96.8253968254;
   return 0;
 };
 
 const postGradEmploymentRateScore = (rate) => {
   if (rate < 25) return 0;
-  if (rate <= 97) return (4/211 * (rate ** 2)) - (389/422 * rate) + (4725/422);
+  if (rate <= 97) return (4 / 211 * (rate ** 2)) - (389 / 422 * rate) + (4725 / 422);
   if (rate <= 100) return 100;
 };
 
@@ -60,9 +59,9 @@ function ManualRate() {
     }));
   };
 
-// =========================
-// COMPILE SCORE
-// =========================
+  // =========================
+  // COMPILE SCORE
+  // =========================
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,9 +89,9 @@ function ManualRate() {
     setScore(Math.ceil(finalScore)); // round up to nearest integer
   };
 
-// =========================
-// DISPLAY
-// =========================
+  // =========================
+  // DISPLAY
+  // =========================
 
   return (
     <main className="App">
