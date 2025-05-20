@@ -25,10 +25,10 @@ const netPriceScore = (netPrice) => {
   return 0;
 };
 
-const postGradEmploymentRateScore = (rate) => {
-  if (rate < 25) return 0;
-  if (rate <= 97) return (4 / 211 * (rate ** 2)) - (389 / 422 * rate) + (4725 / 422);
-  if (rate <= 100) return 100;
+const postGradEmploymentRateScore = (empRate) => {
+  if (empRate < 25) return 0;
+  if (empRate <= 97) return (4 / 211 * (empRate ** 2)) - (389 / 422 * empRate) + (4725 / 422);
+  if (empRate <= 100) return 100;
 };
 
 const numMajorsScore = (num) => {
@@ -38,6 +38,11 @@ const numMajorsScore = (num) => {
   return 50;
 };
 
+const avgAdmitSATScore = (score) => {
+  if (score <= 900) return 0;
+  if (score < 1400) return (1/5)*(score) - 180;
+  return 100;
+};
 
 
 function ManualRate() {
@@ -46,7 +51,8 @@ function ManualRate() {
     studentFacultyRatio: '',
     netCost: '',
     employmentRate: '',
-    numMajors: ''
+    numMajors: '',
+    avgSAT: ''
   });
 
   const [score, setScore] = useState(null);
@@ -68,22 +74,25 @@ function ManualRate() {
 
     const grad = gradRateScore(parseFloat(formData.gradRate));
     console.log(`grad: ${grad}`);
-    const faculty = studentFacultyRatioScore(parseFloat(formData.studentFacultyRatio));
-    console.log(`fac: ${faculty}}`);
+    const stufac = studentFacultyRatioScore(parseFloat(formData.studentFacultyRatio));
+    console.log(`fac: ${stufac}`);
     const net = netPriceScore(parseFloat(formData.netCost));
     console.log(`net: ${net}`);
     const employment = postGradEmploymentRateScore(parseFloat(formData.employmentRate));
     console.log(`emp: ${employment}`);
     const majors = numMajorsScore(parseInt(formData.numMajors));
     console.log(`majors: ${majors}`);
+    const SAT = avgAdmitSATScore(parseFloat(formData.avgSAT));
+    console.log(`SAT: ${SAT}`);
 
     // weight score
     const finalScore = (
       0.2 * grad +
-      0.2 * faculty +
+      0.2 * stufac +
       0.3 * net +
-      0.2 * employment +
-      0.1 * majors
+      0.15 * employment +
+      0.1 * majors +
+      0.05 * SAT
     );
 
     setScore(Math.ceil(finalScore)); // round up to nearest integer
@@ -98,11 +107,12 @@ function ManualRate() {
       <h1>COLLEGE RATER</h1>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <input type="number" name="gradRate" placeholder="4-Year Graduation Rate (%)" value={formData.gradRate} onChange={handleChange} required />
-        <input type="number" name="studentFacultyRatio" placeholder="Student-Faculty Ratio" value={formData.studentFacultyRatio} onChange={handleChange} required />
-        <input type="number" name="netCost" placeholder="Net Cost ($)" value={formData.netCost} onChange={handleChange} required />
-        <input type="number" name="employmentRate" placeholder="Employment Rate 1 Year Post-Grad (%)" value={formData.employmentRate} onChange={handleChange} required />
-        <input type="number" name="numMajors" placeholder="Number of Majors" value={formData.numMajors} onChange={handleChange} required />
+        <input type="number" name="gradRate" placeholder="4-Year Graduation Rate (%)" min="0" max="100" value={formData.gradRate} onChange={handleChange} required />
+        <input type="number" name="studentFacultyRatio" placeholder="Student-Faculty Ratio" min="0" value={formData.studentFacultyRatio} onChange={handleChange} required />
+        <input type="number" name="netCost" placeholder="Net Cost ($)" min="0" value={formData.netCost} onChange={handleChange} required />
+        <input type="number" name="employmentRate" placeholder="Employment Rate 1 Year Post-Grad (%)" min="0" max="100" value={formData.employmentRate} onChange={handleChange} required />
+        <input type="number" name="numMajors" placeholder="Number of Majors" min="0" value={formData.numMajors} onChange={handleChange} required />
+        <input type="number" name="avgSAT" placeholder="Average Admitted SAT Score" min="400" max="1600"  value={formData.avgSAT} onChange={handleChange} required />
         <button type="submit">Calculate Score</button>
       </form>
 
