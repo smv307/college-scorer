@@ -32,6 +32,7 @@ const postGradEmploymentRateScore = (empRate) => {
 };
 
 const numMajorsScore = (num) => {
+  if (num === 1) return 1;
   if (num < 50) return 2 * num;
   if (num <= 60) return 100;
   if (num <= 100) return -0.01 * (5000) ** ((num / 40) - (3 / 2)) + 100;
@@ -87,12 +88,12 @@ function ManualRate() {
 
     // weight score
     const finalScore = (
-      0.2 * grad +
+      (0.2 * grad +
       0.2 * stufac +
       0.3 * net +
       0.15 * employment +
       0.1 * majors +
-      0.05 * SAT
+      0.05 * SAT) - 0
     );
 
     setScore(Math.ceil(finalScore)); // round up to nearest integer
@@ -111,7 +112,7 @@ function ManualRate() {
         <input type="number" name="studentFacultyRatio" placeholder="Student-Faculty Ratio" min="0" value={formData.studentFacultyRatio} onChange={handleChange} required />
         <input type="number" name="netCost" placeholder="Net Cost ($)" min="0" value={formData.netCost} onChange={handleChange} required />
         <input type="number" name="employmentRate" placeholder="Employment Rate 1 Year Post-Grad (%)" min="0" max="100" value={formData.employmentRate} onChange={handleChange} required />
-        <input type="number" name="numMajors" placeholder="Number of Majors" min="0" value={formData.numMajors} onChange={handleChange} required />
+        <input type="number" name="numMajors" placeholder="Number of Majors" min="1" value={formData.numMajors} onChange={handleChange} required />
         <input type="number" name="avgSAT" placeholder="Average Admitted SAT Score" min="400" max="1600"  value={formData.avgSAT} onChange={handleChange} required />
         <button type="submit">Calculate Score</button>
       </form>
